@@ -1,0 +1,15 @@
+# The daybook face has no icons: yazi's file-type glyphs and powerline separators off
+# (they are Nerd Font code points, which this face carries no font for).
+[icon]
+globs = []
+dirs = []
+files = []
+exts = []
+conds = []
+
+[status]
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+[indicator]
+padding = { open = " ", close = " " }

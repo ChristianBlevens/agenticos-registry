@@ -1,0 +1,36 @@
+#!/bin/sh
+# The face's first client (sway.conf). Only the apps closure's bin is mounted, so fonts it
+# carries (ibm-plex) are found by listing their store directories for fontconfig, in this
+# face's own config dir; then the page, which comes back if it is ever closed. The store is
+# attached after the compositor starts, so the list waits for it (up to a minute).
+conf="${XDG_CONFIG_HOME:-$HOME/.config}/fontconfig/conf.d"
+mkdir -p "$conf" "${XDG_RUNTIME_DIR:-/tmp}/daybook"
+n=0
+until ls -d /nix/store/*-ibm-plex-*/share/fonts >/dev/null 2>&1 || [ $n -ge 120 ]; do
+  sleep 0.5; n=$((n + 1))
+done
+{
+  echo '<?xml version="1.0"?>'
+  echo '<!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">'
+  echo '<fontconfig>'
+  for d in /nix/store/*/share/fonts; do [ -d "$d" ] && echo "  <dir>$d</dir>"; done
+  echo '</fontconfig>'
+} > "$conf/90-daybook-store.conf.new" && mv "$conf/90-daybook-store.conf.new" "$conf/90-daybook-store.conf"
+
+# sway carries a file capability, so glibc runs it (and all it starts) in secure mode and
+# drops TZDIR: with TZ alone every clock here read UTC. The machine mounts the zone data.
+[ -d /usr/share/zoneinfo ] && export TZDIR=/usr/share/zoneinfo
+# A session bus at a known path: firefox passes a URL to the firefox already running over
+# D-Bus, and without one a second launch (show_url's, a second `read`) says "already running,
+# but not responding". desktop/firefox finds it by this path from outside this process tree.
+bus="${XDG_RUNTIME_DIR:-/tmp}/daybook/bus"
+rm -f "$bus"
+dbus-daemon --config-file=/etc/face/dbus-session.conf --address="unix:path=$bus" --fork --nopidfile \
+  2>>"${XDG_RUNTIME_DIR:-/tmp}/daybook/page.log" && export DBUS_SESSION_BUS_ADDRESS="unix:path=$bus"
+export EDITOR="nvim --cmd 'set notermguicolors background=light'" VISUAL=nvim YAZI_CONFIG_HOME=/etc/face/yazi
+swaymsg workspace page >/dev/null 2>&1
+while :; do
+  foot -c /etc/face/foot.ini --app-id=daybook -o "font=IBM Plex Mono:size=14" -o "pad=40x28" \
+    python3 /etc/face/daybook.py 2>>"${XDG_RUNTIME_DIR:-/tmp}/daybook/page.log"
+  sleep 1
+done
