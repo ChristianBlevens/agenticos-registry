@@ -1,0 +1,31 @@
+# Packs each changed entry as a Release asset and rebuilds index.json (publish.py). The
+# schedule refreshes download counts; GitHub disables it after 60 days with no activity here.
+name: publish
+on:
+  push:
+    branches: [main]
+    paths: ["faces/**", "toolbelts/**", "bodies/**"]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: read
+concurrency:
+  group: publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 .github/publish.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: commit the index
+        run: |
+          git diff --quiet index.json && exit 0
+          git config user.name "registry"
+          git config user.email "registry@users.noreply.github.com"
+          git commit -m "index" index.json
+          git push

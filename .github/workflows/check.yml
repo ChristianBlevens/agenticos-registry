@@ -1,0 +1,22 @@
+# Checks an upload's pull request by reading its file list through the API. It never checks
+# out or runs the pull request's files: pull_request_target holds write access, and GitHub's
+# own guidance is that such a workflow must not touch untrusted code.
+name: check
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - run: python3 .github/check.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL: ${{ github.event.pull_request.number }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
