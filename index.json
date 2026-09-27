@@ -2,6 +2,19 @@
  "version": 1,
  "entries": [
   {
+   "kind": "face",
+   "id": "daybook",
+   "version": 1,
+   "asset": "https://github.com/ChristianBlevens/agenticos-registry/releases/download/face-daybook-v1/face-daybook.tar.gz",
+   "sha256": "sha256:9a0dec1bd7ab8e13b71f8694245a53be70ca29f7d6c606705f75fe348d4be976",
+   "size": 16511,
+   "author": "ChristianBlevens",
+   "name": "Daybook",
+   "description": null,
+   "thumbnail": null,
+   "downloads": 0
+  },
+  {
    "kind": "toolbelt",
    "id": "minimal",
    "version": 1,
@@ -12,7 +25,7 @@
    "name": "Minimal",
    "description": null,
    "thumbnail": null,
-   "downloads": 0
+   "downloads": 1
   }
  ]
 }
