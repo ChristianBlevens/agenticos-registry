@@ -1,4 +1,18 @@
 {
  "version": 1,
- "entries": []
+ "entries": [
+  {
+   "kind": "toolbelt",
+   "id": "minimal",
+   "version": 1,
+   "asset": "https://github.com/ChristianBlevens/agenticos-registry/releases/download/toolbelt-minimal-v1/toolbelt-minimal.tar.gz",
+   "sha256": "sha256:7be3dd77226c678e62d2cc3f0c4f6b9bf75c2d6983cb96fc0a4072b1253571e2",
+   "size": 3018,
+   "author": "ChristianBlevens",
+   "name": "Minimal",
+   "description": null,
+   "thumbnail": null,
+   "downloads": 0
+  }
+ ]
 }
