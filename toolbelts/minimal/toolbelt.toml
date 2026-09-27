@@ -1,0 +1,9 @@
+id = "minimal"
+name = "Minimal"
+supports = ["busybox*"]
+capabilities = ["shell"]
+
+# python3 and libcap are the session view's own needs: its entrypoint uses capsh to drop
+# capabilities and python3 to run the launcher (§4.4.4, §4.4.5). bash is for `shell`, and
+# curl is how the body is reached from here: `curl localhost:8000`.
+packages = ["bashInteractive", "coreutils", "python3", "util-linux", "libcap", "curl"]
