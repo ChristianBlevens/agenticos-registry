@@ -1,0 +1,22 @@
+id = "daybook"
+name = "Daybook"
+requires_toolbelt_capabilities = []
+
+[desktop]
+compositor = "sway"
+config_dir = "desktop/"
+# firefox reads the web, yazi handles files, wl-clipboard carries `ask` words to the AI
+# terminal, ibm-plex is the page's type (desktop/start writes the fontconfig that finds it),
+# dbus is the session bus firefox hands a URL to its running self over (desktop/start).
+apps = ["firefox", "yazi", "wl-clipboard", "ibm-plex", "dbus"]
+# A wrapper, not firefox itself: `show_url` waits for a new window, and every page here is
+# its own thread (desktop/page).
+browser = "/etc/face/page"
+
+[editor]
+package = "neovim"
+config_dir = "editor/"
+command = ["foot", "-c", "/etc/face/foot.ini", "--app-id=agenticos-editor", "nvim", "--listen", "{socket}",
+           "--cmd", "set rtp^={glue}", "-u", "{config}/init.lua"]
+open = ["nvim", "--server", "{socket}", "--remote-send",
+        '<C-\><C-N><Cmd>lua require("agenticos").show("{request}")<CR>']

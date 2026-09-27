@@ -1,0 +1,32 @@
+#!/bin/sh
+# Every firefox on this face starts here (daybook.py, page). His profile gets the prefs that
+# stop first-run pages: the privacy notice tab, about:welcome, "what's new" after updates.
+# A profile that does not exist yet is created first, so its very first start is quiet too.
+prefs='// daybook face: no first-run pages
+user_pref("datareporting.policy.firstRunURL", "");
+user_pref("datareporting.policy.dataSubmissionPolicyBypassNotification", true);
+user_pref("toolkit.telemetry.reportingpolicy.firstRun", false);
+user_pref("browser.aboutwelcome.enabled", false);
+user_pref("trailhead.firstrun.didSeeAboutWelcome", true);
+user_pref("browser.startup.homepage_override.mstone", "ignore");
+user_pref("startup.homepage_welcome_url", "");
+user_pref("startup.homepage_welcome_url.additional", "");'
+
+roots="${XDG_CONFIG_HOME:-$HOME/.config}/mozilla/firefox $HOME/.mozilla/firefox $HOME/.config/mozilla/firefox"
+found=
+for r in $roots; do [ -f "$r/profiles.ini" ] && found=1; done
+if [ -z "$found" ]; then
+  firefox --headless -CreateProfile default-release >/dev/null 2>&1
+fi
+for r in $roots; do
+  [ -f "$r/profiles.ini" ] || continue
+  sed -n 's/^Path=//p' "$r/profiles.ini" | while read -r p; do
+    case "$p" in /*) d="$p" ;; *) d="$r/$p" ;; esac
+    [ -d "$d" ] || continue
+    grep -qs '^// daybook face: no first-run pages' "$d/user.js" || printf '%s\n' "$prefs" >> "$d/user.js"
+  done
+done
+# show_url runs this from outside the page's process tree, where the session bus is unknown.
+bus="${XDG_RUNTIME_DIR:-/tmp}/daybook/bus"
+[ -z "$DBUS_SESSION_BUS_ADDRESS" ] && [ -S "$bus" ] && export DBUS_SESSION_BUS_ADDRESS="unix:path=$bus"
+exec firefox "$@"

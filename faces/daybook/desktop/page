@@ -1,0 +1,7 @@
+#!/bin/sh
+# `[desktop] browser`, what `show_url` runs with a URL. Every page is its own thread, and
+# show_url waits for a new window, so a new window; the hint tells the page who opened it.
+dir="${XDG_RUNTIME_DIR:-/tmp}/daybook"
+mkdir -p "$dir"
+printf '%s\n' "$*" > "$dir/shown.new" && mv "$dir/shown.new" "$dir/shown"
+exec /etc/face/firefox --new-window "$@"
