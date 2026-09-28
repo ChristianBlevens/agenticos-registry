@@ -16,7 +16,7 @@ browser = "/etc/face/page"
 [editor]
 package = "neovim"
 config_dir = "editor/"
-command = ["foot", "-c", "/etc/face/foot.ini", "--app-id=agenticos-editor", "nvim", "--listen", "{socket}",
+command = ["foot", "-c", "/etc/face/foot.ini", "--app-id=raigolmi-editor", "nvim", "--listen", "{socket}",
            "--cmd", "set rtp^={glue}", "-u", "{config}/init.lua"]
 open = ["nvim", "--server", "{socket}", "--remote-send",
-        '<C-\><C-N><Cmd>lua require("agenticos").show("{request}")<CR>']
+        '<C-\><C-N><Cmd>lua require("raigolmi").show("{request}")<CR>']

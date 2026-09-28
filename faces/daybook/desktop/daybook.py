@@ -40,7 +40,7 @@ FOOT = ["foot", "-c", "/etc/face/foot.ini"]
 NVIM = ["nvim", "--cmd", "set notermguicolors background=light title titlestring=%t"]
 PAGE = "page"          # the page's workspace
 CODE = "code"          # the editor window's workspace
-EDITOR_APP = "agenticos-editor"
+EDITOR_APP = "raigolmi-editor"
 HINT_FRESH = 20.0      # seconds a hint from page/init.lua stays good for
 
 VERBS = {
@@ -458,7 +458,7 @@ class Page:
             self.spawn([*FOOT, "--app-id=thread-files", "yazi", str(place)], entry,
                        cwd=place if place.is_dir() else HOME)
         elif verb == "shell":
-            self.spawn([*FOOT, "--app-id=thread-shell", "--title=shell", "python3", "-m", "aos", "terminal",
+            self.spawn([*FOOT, "--app-id=thread-shell", "--title=shell", "python3", "-m", "rai", "terminal",
                         *([arg] if arg else [])], entry)
         elif verb == "ask":
             if arg and shutil.which("wl-copy"):
@@ -467,7 +467,7 @@ class Page:
                     subprocess.run(["wl-copy", *which, "--", arg], timeout=5,
                                    stdout=self.log, stderr=self.log)
                 self.flash = "your words are on the clipboard: right-click in the terminal"
-            self.spawn(["python3", "-m", "aos", "ai", "--show"], None)
+            self.spawn(["python3", "-m", "rai", "ai", "--show"], None)
         else:  # an entry from a window that opened on its own; nothing to open again
             self.flash = "that thread has closed"
 

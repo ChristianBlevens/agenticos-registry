@@ -1,4 +1,4 @@
-"""Publishes the registry (AgenticOS's ARCHITECTURE.md §5.1): each entry whose files changed becomes a new
+"""Publishes the registry (RaiGolmi's ARCHITECTURE.md §5.1): each entry whose files changed becomes a new
 Release asset, and `index.json` is rebuilt with every entry's author and download count.
 
 Runs in this repo's workflow with its GITHUB_TOKEN. An entry is `<kinds>/<id>/`; its asset is

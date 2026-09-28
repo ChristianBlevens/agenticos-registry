@@ -1,6 +1,6 @@
--- pyright from the focused toolbelt, through agenticd's glue (agenticos.lua).
-local agenticos = require('agenticos')
-agenticos.setup({
+-- pyright from the focused toolbelt, through raigolmid's glue (raigolmi.lua).
+local raigolmi = require('raigolmi')
+raigolmi.setup({
   pyright = {
     cmd = { 'pyright-langserver', '--stdio' },
     filetypes = { 'python' },
@@ -10,8 +10,8 @@ agenticos.setup({
 
 -- A file Claude shows (show_file) is written on the page, which brings the editor's thread
 -- up: the page is what places windows (desktop/daybook.py, hint "showfile").
-local show = agenticos.show
-agenticos.show = function(request)
+local show = raigolmi.show
+raigolmi.show = function(request)
   show(request)
   local dir = (os.getenv('XDG_RUNTIME_DIR') or '/tmp') .. '/daybook'
   vim.fn.mkdir(dir, 'p')
