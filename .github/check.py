@@ -1,4 +1,4 @@
-"""Checks an upload's pull request from its file list alone (RaiGolmi's ARCHITECTURE.md §5.1).
+"""Checks an upload's pull request from its file list alone.
 
 It runs from main's copy of this file and reads the pull request through the API, never its
 files on disk. An upload is one entry: every path under one `<kinds>/<id>/`, with that kind's
