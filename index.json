@@ -4,15 +4,15 @@
   {
    "kind": "face",
    "id": "daybook",
-   "version": 1,
-   "asset": "https://github.com/ChristianBlevens/raigolmi-registry/releases/download/face-daybook-v1/face-daybook.tar.gz",
-   "sha256": "sha256:9a0dec1bd7ab8e13b71f8694245a53be70ca29f7d6c606705f75fe348d4be976",
-   "size": 16511,
+   "version": 2,
+   "asset": "https://github.com/ChristianBlevens/raigolmi-registry/releases/download/face-daybook-v2/face-daybook.tar.gz",
+   "sha256": "sha256:d17932dc9b419fe00c27cd3c78fb8127d05b67f8ab864901c08b6b1dc7e11528",
+   "size": 16510,
    "author": "ChristianBlevens",
    "name": "Daybook",
    "description": null,
    "thumbnail": null,
-   "downloads": 1
+   "downloads": 2
   },
   {
    "kind": "toolbelt",
